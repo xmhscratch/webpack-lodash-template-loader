@@ -24,11 +24,10 @@ module.exports = function(source) {
 
   var template = _.template(source, config.templateSetting);
   var exportsString = "module.exports = ";
-	if (config.exportAsDefault) {
-        exportsString = "exports.default = ";
-
-	} else if (config.exportAsEs6Default) {
-        exportsString = "export default ";
-	}
+  if (config.exportAsDefault) {
+    exportsString = "exports.default = ";
+  } else if (config.exportAsEs6Default) {
+    exportsString = "export default ";
+  }
   return `${exportsString} ${template}`;
 };
