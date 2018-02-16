@@ -3,7 +3,7 @@ var loaderUtils = require('loader-utils');
 
 function getLoaderConfig(context) {
 	var query = loaderUtils.getOptions(context) || {};
-	var configKey = query.config || 'htmlLoader';
+	var configKey = query.config || 'lodashLoader';
 	var config = context.options && context.options.hasOwnProperty(configKey) ? context.options[configKey] : {};
 
 	delete query.config;
