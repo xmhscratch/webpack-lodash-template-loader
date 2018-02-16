@@ -1,18 +1,34 @@
 var _ = require('lodash');
 var loaderUtils = require('loader-utils');
 
+function getLoaderConfig(context) {
+	var query = loaderUtils.getOptions(context) || {};
+	var configKey = query.config || 'htmlLoader';
+	var config = context.options && context.options.hasOwnProperty(configKey) ? context.options[configKey] : {};
+
+	delete query.config;
+
+	return assign(query, config);
+}
+
 module.exports = function(source) {
   this.cacheable && this.cacheable();
-  var query = loaderUtils.parseQuery(this.query);
-  var options = this.options.lodashLoader || {};
+  var config = getLoaderConfig(this);
 
   ['escape', 'interpolate', 'evaluate'].forEach(function(templateSetting) {
-    var setting = query[templateSetting];
+    var setting = config[templateSetting];
     if (_.isString(setting)) {
-      query[templateSetting] = new RegExp(setting, 'g');
+      config[templateSetting] = new RegExp(setting, 'g');
     }
   });
 
-  var template = _.template(source, _.extend({}, query, options));
-  return 'export default ' + template;
+  var template = _.template(source, config.templateSetting);
+  var exportsString = "module.exports = ";
+	if (config.exportAsDefault) {
+        exportsString = "exports.default = ";
+
+	} else if (config.exportAsEs6Default) {
+        exportsString = "export default ";
+	}
+  return `${exportsString} ${template}`;
 };
