@@ -4,7 +4,7 @@ var loaderUtils = require('loader-utils');
 module.exports = function(source) {
   this.cacheable && this.cacheable();
   var query = loaderUtils.parseQuery(this.query);
-  var options = this.options.ejsLoader || {};
+  var options = this.options.lodashLoader || {};
 
   ['escape', 'interpolate', 'evaluate'].forEach(function(templateSetting) {
     var setting = query[templateSetting];
@@ -13,5 +13,6 @@ module.exports = function(source) {
     }
   });
 
-  return export default _.template(source, _.extend({}, query, options));
+  var template = _.template(source, _.extend({}, query, options));
+  return 'export default ' + template;
 };
