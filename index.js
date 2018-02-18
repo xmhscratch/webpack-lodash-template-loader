@@ -1,5 +1,7 @@
 var _ = require('lodash');
 var loaderUtils = require('loader-utils');
+var assign = require('object-assign');
+var compile = require('es6-templates').compile;
 
 function getLoaderConfig(context) {
     var query = loaderUtils.getOptions(context) || {};
@@ -11,8 +13,9 @@ function getLoaderConfig(context) {
     return assign(query, config);
 }
 
-module.exports = function (source) {
+module.exports = function (content) {
     this.cacheable && this.cacheable();
+    var callback = this.async();
     var config = getLoaderConfig(this);
 
     ['escape', 'interpolate', 'evaluate'].forEach(function (templateSetting) {
@@ -22,12 +25,14 @@ module.exports = function (source) {
         }
     });
 
-    var template = _.template(source, config.templateSetting);
+    content = _.template(`${content}`, config.templateSetting).toString();
     var exportsString = "module.exports = ";
     if (config.exportAsDefault) {
         exportsString = "exports.default = ";
     } else if (config.exportAsEs6Default) {
         exportsString = "export default ";
     }
-    return `${exportsString} ${template}`;
+    content = content.replace(/^function/g, `${exportsString}function`);
+
+    callback(null, content);
 };
