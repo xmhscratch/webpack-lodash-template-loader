@@ -9,7 +9,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "es6-templates": "^0.2.3",
+    "loader-utils": "^1.1.0",
     "lodash": "^3.6.0",
-    "loader-utils": "^1.1.0"
+    "object-assign": "^4.1.1"
   }
 }
