@@ -1,5 +1,5 @@
 {
-  "name": "@claimh/webpack-lodash-template-loader",
+  "name": "webpack-lodash-template-loader",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
