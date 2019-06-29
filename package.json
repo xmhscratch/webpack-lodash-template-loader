@@ -6,15 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "publishConfig": {
-    "registry": "http://registry.cicd.claimh.com:6000/"
-  },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "es6-templates": "^0.2.3",
     "loader-utils": "^1.1.0",
-    "lodash": "^3.6.0",
+    "lodash": "^4.17.11",
     "object-assign": "^4.1.1"
   }
 }
